@@ -10,7 +10,7 @@ namespace CRM_OrionTek_API.Services.ClientService
     public interface IClient
     {
         Task<Client> Create(Client client);
-        Task<Client> Update(Client client);
+        Task<Client> Update(Client client, int id);
         Task<Dto_pagination> GetAllPaginated(int page, int size, string SearchData);
         Task<Client> GetOne(int id);
         Task<Client> Delete(int id);

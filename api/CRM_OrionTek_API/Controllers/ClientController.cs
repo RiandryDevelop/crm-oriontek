@@ -76,7 +76,7 @@ namespace MeditodApi.Controllers
         }
 
         [HttpPut("UpdateClient")]
-        public async Task<IActionResult> Update([FromBody] ClientDTO clientDto)
+        public async Task<IActionResult> Update([FromBody] ClientDTO clientDto, int id)
         {
             try
             {
@@ -98,9 +98,7 @@ namespace MeditodApi.Controllers
                     }).ToList() ?? new List<Location>()
                 };
 
-
-
-                var data = await _client.Update(client);
+                var data = await _client.Update(client, id);
                 return Ok(data);
             }
             catch (Exception ex)
@@ -108,6 +106,7 @@ namespace MeditodApi.Controllers
                 return StatusCode(500, new { message = "An error occurred while processing the request.", error = ex.Message });
             }
         }
+
 
         [HttpDelete("DeleteClient")]
         public async Task<IActionResult> Delete([FromQuery] int id)

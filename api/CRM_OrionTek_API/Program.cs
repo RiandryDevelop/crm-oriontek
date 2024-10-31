@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Configure CORS
+
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("New Policy", builder =>
@@ -22,11 +22,9 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// Add services
 builder.Services.AddScoped<IClient, ClientService>();
 builder.Services.AddScoped<ILocation, LocationService>();
 
-// Configure DbContext
 builder.Services.AddDbContext<Context>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("connection"));
@@ -42,7 +40,6 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-// Apply CORS policy
 app.UseAuthorization();
 app.MapControllers();
 app.UseCors("New Policy");

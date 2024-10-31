@@ -39,7 +39,7 @@ namespace CRM_OrionTek_API.Services.ClientService
         {
             var query = _context.Client.AsQueryable();
             var searchQuery = name.ToLower();
-            var results = query.Where(e => e.Name.ToLower().Contains(searchQuery)).ToListAsync();
+            var results = query.Where(e => e.Name.ToLower().Contains(searchQuery)).Include(e => e.Locations).ToListAsync();
             return results;
         }
 
@@ -81,14 +81,28 @@ namespace CRM_OrionTek_API.Services.ClientService
             return results;
         }
 
-        public async Task<Client> Update(Client client)
+        public async Task<Client> Update(Client client, int id)
         {
-            client.UpdateDate = DateTime.Now;
-            
-            _context.Client.Update(client);
+            var existingClient = await _context.Client.FindAsync(id);
+
+            if (existingClient == null)
+            {
+                throw new KeyNotFoundException("Client not found.");
+            }
+
+            existingClient.UpdateDate = DateTime.Now;
+            existingClient.Name = client.Name;
+            existingClient.Locations = client.Locations;
+
+            existingClient.UpdateDate = DateTime.Now;
+
+            // Save changes to the database
             await _context.SaveChangesAsync();
-            return client;
+
+            return existingClient;
         }
+
+
 
         public Task<List<Client>> GetAll()
         {
