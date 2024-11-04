@@ -19,7 +19,8 @@ namespace MeditodApi.Controllers
         public async Task<IActionResult> GetPaginate([FromQuery] int page, int size, string? queryData)
         {
 
-            if (page <= 0)
+
+            if (page < 0)
             {
                 return BadRequest(new { Message = "The page must be greater than or equal to 1" });
             }

@@ -11,7 +11,7 @@ namespace CRM_OrionTek_API.Services.ClientService
     {
         Task<Client> Create(Client client);
         Task<Client> Update(Client client, int id);
-        Task<Dto_pagination> GetAllPaginated(int page, int size, string SearchData);
+        Task<Dto_pagination> GetAllPaginated(int page = 1, int size = 0, string? SearchData = "");
         Task<Client> GetOne(int id);
         Task<Client> Delete(int id);
         Task<List<Client>> GetByname(string name);

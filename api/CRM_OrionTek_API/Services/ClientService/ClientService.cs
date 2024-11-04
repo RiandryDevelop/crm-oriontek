@@ -43,7 +43,7 @@ namespace CRM_OrionTek_API.Services.ClientService
             return results;
         }
 
-        public async Task<Dto_pagination> GetAllPaginated(int page, int size, string searchData)
+        public async Task<Dto_pagination> GetAllPaginated(int page, int size, string? searchData)
         {
             page = page <= 0 ? 1 : page;
             size = size <= 0 ? 10 : size; 
@@ -83,20 +83,42 @@ namespace CRM_OrionTek_API.Services.ClientService
 
         public async Task<Client> Update(Client client, int id)
         {
-            var existingClient = await _context.Client.FindAsync(id);
+            var existingClient = await _context.Client
+                .Include(c => c.Locations) // Asegúrate de incluir las `Locations` existentes
+                .FirstOrDefaultAsync(c => c.ClientId == id);
 
             if (existingClient == null)
             {
                 throw new KeyNotFoundException("Client not found.");
             }
 
-            existingClient.UpdateDate = DateTime.Now;
+            // Actualizar campos básicos
             existingClient.Name = client.Name;
-            existingClient.Locations = client.Locations;
-
             existingClient.UpdateDate = DateTime.Now;
 
-            // Save changes to the database
+            // Actualizar las `Locations` existentes
+            foreach (var location in client.Locations)
+            {
+                var existingLocation = existingClient.Locations
+                    .FirstOrDefault(l => l.LocationId == location.LocationId);
+
+                if (existingLocation != null)
+                {
+                    // Actualiza las propiedades de la localización existente
+                    existingLocation.DistrictName = location.DistrictName;
+                    existingLocation.SectorName = location.SectorName;
+                    existingLocation.MunicipalityName = location.MunicipalityName;
+                    existingLocation.LocationName = location.LocationName;
+                    existingLocation.ProvinceName = location.ProvinceName;
+                }
+                else
+                {
+                    // Agrega una nueva localización si no existe
+                    existingClient.Locations.Add(location);
+                }
+            }
+
+            // Guardar cambios en la base de datos
             await _context.SaveChangesAsync();
 
             return existingClient;
