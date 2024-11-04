@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace CRM_OrionTek_API.Models
 {
+    [Table("Client")]
     public class Client
     {
         [Key]
@@ -12,7 +13,7 @@ namespace CRM_OrionTek_API.Models
 
         [Column("ClientName")]
         [Required]
-        public required string Name { get; set; } 
+        public required string ClientName { get; set; } 
         public DateTime CreateDate { get; set; }
         public DateTime UpdateDate { get; set; }
         public ICollection<Location>? Locations { get; set; }

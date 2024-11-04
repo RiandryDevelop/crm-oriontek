@@ -34,35 +34,56 @@ namespace MeditodApi.Services.LocationService
         }
 
 
-        public Task<List<Location>> GetByname(string name)
+        //public Task<List<Location>> GetByname(string name)
+        //{
+        //    var query = _context.Location.AsQueryable();
+        //    var searchQuery = name.ToLower();
+        //    var results = query.Where(e => e.LocationName.ToLower().Contains(searchQuery)).ToListAsync();
+        //    return results;
+        //}
+
+        public async Task<Dto_pagination> GetAllPaginated(int page, int size, string searchData)
         {
-            var query = _context.Location.AsQueryable();
-            var searchQuery = name.ToLower();
-            var results = query.Where(e => e.LocationName.ToLower().Contains(searchQuery)).ToListAsync();
-            return results;
-        }
+            // Validación de la página y el tamaño
+            page = page <= 0 ? 1 : page;
+            size = size <= 0 ? 10 : size;
 
-        public async Task<Dto_pagination> GetAllPaginated(int page, int size, string SearchData)
-        {
+            // Incluyendo las relaciones definidas en el modelo
+            var query = _context.Location
+                .Include(l => l.Country)
+                .Include(l => l.Province)
+                .Include(l => l.Municipality)
+                .Include(l => l.District)
+                .Include(l => l.Sector)
+                .AsQueryable();
 
-            var query = _context.Location.AsQueryable();
-
-            if (!string.IsNullOrEmpty(SearchData))
+            // Manejo de la búsqueda
+            if (!string.IsNullOrWhiteSpace(searchData))
             {
-                var searchQuery = SearchData.ToLower();
-                query = query.Where(e => e.LocationName.ToLower().Contains(searchQuery));
-                page = 1;
+                var searchQuery = searchData.ToLower();
+                query = query.Where(e =>
+                    e.Country != null && e.Country.CountryName.ToLower().Contains(searchQuery) ||
+                    e.Province != null && e.Province.ProvinceName.ToLower().Contains(searchQuery) ||
+                    e.Municipality != null && e.Municipality.MunicipalityName.ToLower().Contains(searchQuery) ||
+                    e.District != null && e.District.DistrictName.ToLower().Contains(searchQuery) ||
+                    e.Sector != null && e.Sector.SectorName.ToLower().Contains(searchQuery));
+                page = 1; // Reinicia la paginación si hay búsqueda
             }
 
+            // Obtener el número total de registros
             var totalRecords = await query.CountAsync();
 
+            // Obtener los elementos paginados
             var items = await query
                 .Skip((page - 1) * size)
                 .Take(size)
                 .ToListAsync();
 
+            // Devolver los datos paginados
             return new Dto_pagination { Data = items, QuantityRecords = totalRecords };
         }
+
+
 
         public Task<Location> GetOne(int id)
         {

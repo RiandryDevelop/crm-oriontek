@@ -1,25 +1,36 @@
-﻿    using System.ComponentModel.DataAnnotations.Schema;
-    using System.ComponentModel.DataAnnotations;
-    using System.Text.Json.Serialization;
+﻿using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
-    namespace CRM_OrionTek_API.DTO
+namespace CRM_OrionTek_API.DTO
+{
+    public class ClientDTO
     {
-        public class ClientDTO
-        {
-            [JsonIgnore]
-            [Key]
-            public int ClientId { get; set; }
-            public required string Name { get; set; }
+        [JsonIgnore]
+        [Key]
+        public int ClientId { get; set; }
+        public required string Name { get; set; }
 
-            public List<LocationDTO> ClientLocations { get; set; } = new List<LocationDTO>();
-        }
-
-        public class LocationDTO
-        {
-            public required string LocationName { get; set; }
-            public required string ProvinceName { get; set; }
-            public required string MunicipalityName { get; set; }
-            public required string DistrictName { get; set; }
-            public required string SectorName { get; set; }
-        }
+        public List<LocationDTO> ClientLocations { get; set; } = new List<LocationDTO>();
     }
+
+    public class LocationDTO
+    {
+        [Required]
+        public required string LocationName { get; set; }
+
+        [Required]
+        public required int CountryId { get; set; }
+
+        [Required]
+        public required int ProvinceId { get; set; }
+
+        [Required]
+        public required int MunicipalityId { get; set; }
+
+        [Required]
+        public required int DistrictId { get; set; }
+
+        [Required]
+        public required int SectorId { get; set; }
+    }
+}

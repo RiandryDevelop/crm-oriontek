@@ -18,15 +18,12 @@ namespace MeditodApi.Controllers
         [HttpGet("GetClientPaginate")]
         public async Task<IActionResult> GetPaginate([FromQuery] int page, int size, string? queryData)
         {
-
-
             if (page < 0)
             {
                 return BadRequest(new { Message = "The page must be greater than or equal to 1" });
             }
 
             var data = await _client.GetAllPaginated(page, size, queryData);
-
             return Ok(data);
         }
 
@@ -53,19 +50,21 @@ namespace MeditodApi.Controllers
                 {
                     return BadRequest(new { message = "The model is not valid" });
                 }
+
                 var client = new Client
                 {
-                    Name = clientDto.Name,
+                    ClientName = clientDto.Name,
                     Locations = clientDto.ClientLocations?.Select(location => new Location
                     {
-                        DistrictName = location.DistrictName,
-                        SectorName = location.SectorName,
-                        MunicipalityName = location.MunicipalityName,
-                        LocationName = location.LocationName,
-                        ProvinceName = location.ProvinceName,
+                        CountryId = location.CountryId,
+                        ProvinceId = location.ProvinceId,
+                        MunicipalityId = location.MunicipalityId,
+                        DistrictId = location.DistrictId,
+                        SectorId = location.SectorId,
+                        CreateDate = DateTime.UtcNow,
+                        UpdateDate = DateTime.UtcNow
                     }).ToList() ?? new List<Location>()
                 };
-
 
                 var data = await _client.Create(client);
                 return Ok(data);
@@ -88,14 +87,15 @@ namespace MeditodApi.Controllers
 
                 var client = new Client
                 {
-                    Name = clientDto.Name,
+                    ClientName = clientDto.Name,
                     Locations = clientDto.ClientLocations?.Select(location => new Location
                     {
-                        DistrictName = location.DistrictName,
-                        SectorName = location.SectorName,
-                        MunicipalityName = location.MunicipalityName,
-                        LocationName = location.LocationName,
-                        ProvinceName = location.ProvinceName,
+                        CountryId = location.CountryId,
+                        ProvinceId = location.ProvinceId,
+                        MunicipalityId = location.MunicipalityId,
+                        DistrictId = location.DistrictId,
+                        SectorId = location.SectorId,
+                        UpdateDate = DateTime.UtcNow // Actualiza la fecha
                     }).ToList() ?? new List<Location>()
                 };
 
@@ -107,7 +107,6 @@ namespace MeditodApi.Controllers
                 return StatusCode(500, new { message = "An error occurred while processing the request.", error = ex.Message });
             }
         }
-
 
         [HttpDelete("DeleteClient")]
         public async Task<IActionResult> Delete([FromQuery] int id)
@@ -122,6 +121,5 @@ namespace MeditodApi.Controllers
                 return StatusCode(500, new { message = "An error occurred while processing the request.", error = ex.Message });
             }
         }
-
     }
 }

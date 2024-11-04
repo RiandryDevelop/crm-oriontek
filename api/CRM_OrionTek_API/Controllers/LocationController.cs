@@ -42,12 +42,12 @@ namespace MeditodApi.Controllers
             return Ok(results);
         }
 
-        [HttpGet("GetLocationByName")]
-        public async Task<IActionResult> GetByName([FromQuery] string name)
-        {
-            var result = await _location.GetByname(name);
-            return Ok(result);
-        }
+        //[HttpGet("GetLocationByName")]
+        //public async Task<IActionResult> GetByName([FromQuery] string name)
+        //{
+        //    var result = await _location.GetByname(name);
+        //    return Ok(result);
+        //}
 
         [HttpPost("CreateLocation")]
         public async Task<IActionResult> Create([FromBody] Location location)

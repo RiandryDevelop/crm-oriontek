@@ -12,6 +12,20 @@ namespace CRM_OrionTek_API.Data
         public DbSet<Client> Client { get; set; }
         public DbSet<Location> Location { get; set; }
 
+        public DbSet<Country> Country { get; set; }
+
+        public DbSet<Sector> Sector { get; set; }
+
+        public DbSet<Province> Province { get; set; }
+
+        public DbSet<Municipality> Municipality { get; set; }
+
+        public DbSet<District> District { get; set; }
+
+
+
+
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -20,7 +34,7 @@ namespace CRM_OrionTek_API.Data
             {
                 foreach (var foreignKey in entityType.GetForeignKeys())
                 {
-                    foreignKey.DeleteBehavior = DeleteBehavior.Cascade;
+                    foreignKey.DeleteBehavior = DeleteBehavior.NoAction;
                 }
             }
         }

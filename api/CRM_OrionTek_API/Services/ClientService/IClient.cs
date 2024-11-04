@@ -4,9 +4,10 @@ namespace CRM_OrionTek_API.Services.ClientService
 {
     public class Dto_pagination
     {
-        public List<Client>? Data { get; set; }
+        public object Data { get; set; }
         public int QuantityRecords { get; set; }
     }
+
     public interface IClient
     {
         Task<Client> Create(Client client);
