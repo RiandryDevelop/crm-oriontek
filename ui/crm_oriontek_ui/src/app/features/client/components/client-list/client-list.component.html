@@ -1,0 +1,54 @@
+<div class="client-list">
+    <!-- Page Header with Title and "Add Client" Button -->
+    <div class="header">
+      <h2>Client List</h2>
+      <button (click)="onAddClient()" class="btn btn-primary">Add New Client</button>
+    </div>
+  
+    <!-- Search Bar -->
+    <div class="search-bar">
+      <input
+        type="text"
+        [(ngModel)]="searchTerm"
+        placeholder="Search clients..."
+        (input)="onSearch()"
+        class="form-control"
+      />
+    </div>
+  
+    <!-- Client Table -->
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Phone Number</th>
+          <th>Locations</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let client of filteredClients; let i = index">
+          <td>{{ i + 1 }}</td>
+          <td>{{ client.name }}</td>
+          <td>{{ client.email }}</td>
+          <td>{{ client.phoneNumber }}</td>
+          <td>
+            <ul>
+              <li *ngFor="let location of client.locations">{{ location.address }}, {{ location.city }}</li>
+            </ul>
+          </td>
+          <td>
+            <button (click)="onViewClient(client)" class="btn btn-sm btn-info">View</button>
+            <button (click)="onEditClient(client)" class="btn btn-sm btn-warning">Edit</button>
+            <button (click)="onDeleteClient(client.clientId)" class="btn btn-sm btn-danger">Delete</button>
+          </td>
+        </tr>
+        <tr *ngIf="!filteredClients.length">
+          <td colspan="6" class="text-center">No clients found</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  
