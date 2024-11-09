@@ -5,6 +5,12 @@ VisualStudioVersion = 17.10.34928.147
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CRM_OrionTek_API", "CRM_OrionTek_API.csproj", "{B61D7A47-D4FA-416A-914F-B53F7BD33F8C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CRM_OrionTek.Application", "CRM_OrionTek.Application\CRM_OrionTek.Application.csproj", "{703A14D0-9B5E-4C5C-A940-40A592E4D8CC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CRM_OrionTek.Domain", "CRM_OrionTek.Domain\CRM_OrionTek.Domain.csproj", "{BF94B0C4-E52E-4016-8602-7E168892C4AB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CRM_OrionTek.Infrastructure", "CRM_OrionTek.Infrastructure\CRM_OrionTek.Infrastructure.csproj", "{2B50086D-22BF-40D7-A166-374126E4BC23}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +21,18 @@ Global
 		{B61D7A47-D4FA-416A-914F-B53F7BD33F8C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B61D7A47-D4FA-416A-914F-B53F7BD33F8C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B61D7A47-D4FA-416A-914F-B53F7BD33F8C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{703A14D0-9B5E-4C5C-A940-40A592E4D8CC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{703A14D0-9B5E-4C5C-A940-40A592E4D8CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{703A14D0-9B5E-4C5C-A940-40A592E4D8CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{703A14D0-9B5E-4C5C-A940-40A592E4D8CC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BF94B0C4-E52E-4016-8602-7E168892C4AB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BF94B0C4-E52E-4016-8602-7E168892C4AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BF94B0C4-E52E-4016-8602-7E168892C4AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BF94B0C4-E52E-4016-8602-7E168892C4AB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2B50086D-22BF-40D7-A166-374126E4BC23}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2B50086D-22BF-40D7-A166-374126E4BC23}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2B50086D-22BF-40D7-A166-374126E4BC23}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2B50086D-22BF-40D7-A166-374126E4BC23}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

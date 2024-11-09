@@ -1,0 +1,16 @@
+<p>dialog-add-edit works!</p>
+<!-- src/app/Dialogs/dialog-add-edit/dialog-add-edit.component.html -->
+<h1 mat-dialog-title>Add/Edit Client</h1>
+<div mat-dialog-content>
+  <form>
+    <mat-form-field>
+      <mat-label>Client Name</mat-label>
+      <input matInput placeholder="Enter name" required>
+    </mat-form-field>
+    <!-- Agregar más campos según sea necesario -->
+  </form>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onCancel()">Cancel</button>
+  <button mat-button color="primary" (click)="onSave()">Save</button>
+</div>

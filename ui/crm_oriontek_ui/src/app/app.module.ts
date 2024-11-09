@@ -18,10 +18,21 @@ import { MatIconModule } from "@angular/material/icon";
 import { MatDialogModule } from "@angular/material/dialog";
 import { MatGridListModule } from "@angular/material/grid-list";
 
-// App Components
+// NgRx Store and Effects
+import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
+
+// Feature Modules
+import { AuthModule } from './modules/auth/auth.module';
+import { ClientsModule } from './modules/clients/clients.module';
+
+// Core Components
 import { AppComponent } from './app.component';
-import { DialogAddEditComponent } from './Dialogs/dialog-add-edit/dialog-add-edit.component';
-import { DialogDeleteComponent } from './Dialogs/dialog-delete/dialog-delete.component';
+import { DialogAddEditComponent } from './shared/components/dialog-add-edit/dialog-add-edit.component';
+import { DialogDeleteComponent } from './shared/components/dialog-delete/dialog-delete.component';
+
+// App Routing
+import { AppRoutingModule } from './app-routing.module';
 
 @NgModule({
   declarations: [
@@ -34,7 +45,7 @@ import { DialogDeleteComponent } from './Dialogs/dialog-delete/dialog-delete.com
     BrowserAnimationsModule,
     HttpClientModule,
     ReactiveFormsModule,
-    FormsModule, 
+    FormsModule,
     MatGridListModule,
     MatDialogModule,
     MatIconModule,
@@ -46,7 +57,12 @@ import { DialogDeleteComponent } from './Dialogs/dialog-delete/dialog-delete.com
     MatNativeDateModule,
     MatPaginatorModule,
     MatTableModule,
-    MatButtonModule
+    MatButtonModule,
+    StoreModule.forRoot({}, {}),    // Configure the root reducer
+    EffectsModule.forRoot([]),      // Configure the root effects
+    AppRoutingModule,               // Routing for main navigation
+    AuthModule,                     // Authentication feature module
+    ClientsModule                   // Clients management feature module
   ],
   providers: [],
   bootstrap: [AppComponent]

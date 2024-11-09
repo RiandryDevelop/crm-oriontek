@@ -2,14 +2,14 @@
 using CRM_OrionTek_API.Services.LocationService;
 using Microsoft.AspNetCore.Mvc;
 
-namespace MeditodApi.Controllers
+namespace CRM_OrionTek_API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
     public class LocationController : ControllerBase
     {
-        private readonly ILocation _location;
-        public LocationController(ILocation location)
+        private readonly ILocationRepository _location;
+        public LocationController(ILocationRepository location)
         {
             _location = location;
         }

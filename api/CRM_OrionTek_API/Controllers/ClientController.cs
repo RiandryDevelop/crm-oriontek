@@ -3,14 +3,14 @@ using CRM_OrionTek_API.Models;
 using CRM_OrionTek_API.Services.ClientService;
 using Microsoft.AspNetCore.Mvc;
 
-namespace MeditodApi.Controllers
+namespace CRM_OrionTek_API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
     public class ClientController : ControllerBase
     {
-        private readonly IClient _client;
-        public ClientController(IClient client)
+        private readonly IClientRepository _client;
+        public ClientController(IClientRepository client)
         {
             _client = client;
         }

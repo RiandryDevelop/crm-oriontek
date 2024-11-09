@@ -4,10 +4,10 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
-import { DialogAddEditComponent } from "./Dialogs/dialog-add-edit/dialog-add-edit.component";
-import { DialogDeleteComponent } from './Dialogs/dialog-delete/dialog-delete.component';
+import { DialogAddEditComponent } from "./shared/components/dialog-add-edit/dialog-add-edit.component";
+import { DialogDeleteComponent } from './shared/components/dialog-delete/dialog-delete.component';
 
-import { Client } from "./models/client.model";
+import { Client } from "./models/client/client.model";
 import { ClientService } from './Services/client.service';
 
 @Component({
@@ -89,7 +89,7 @@ export class AppComponent implements AfterViewInit, OnInit {
 
   // Load client data into the table
   loadClients() {
-    this.clientService.getClientsPaginated(1, 10, '').pipe().subscribe({
+    this.clientService.getClientsPaginated(1, 10).pipe().subscribe({
       next: (data) => {
         this.dataSource.data = data;
       },

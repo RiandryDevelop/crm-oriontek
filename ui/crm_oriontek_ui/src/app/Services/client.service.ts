@@ -1,39 +1,69 @@
+// src/app/services/client.service.ts
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { Client } from '../models/client.model';
-import { environment } from 'src/environments/environment.development';
+import { Client } from '../models/client/client.model';
+import { Observable, of } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable({ providedIn: 'root' })
 export class ClientService {
-  private baseUrl = environment.apiUrl; // Replace with your API URL
-
   constructor(private http: HttpClient) {}
 
-  getClientsPaginated(page: number, size: number, searchData: string): Observable<any> {
-    const params = new HttpParams()
-      .set('page', page.toString())
-      .set('size', size.toString())
-      .set('searchData', searchData || '');
-
-    return this.http.get<any>(`${this.baseUrl}Client/GetClientPaginate`, { params });
+  getClients(): Observable<Client[]> {
+    return this.http.get<Client[]>('/api/clients').pipe(
+      catchError((error) => {
+        console.error('Error fetching clients:', error);
+        return of([]); // Devuelve un arreglo vacío en caso de error
+      })
+    );
   }
 
   getClientById(id: number): Observable<Client> {
-    return this.http.get<Client>(`${this.baseUrl}Client/GetOneClient`, { params: { id } });
+    return this.http.get<Client>(`/api/clients/${id}`).pipe(
+      catchError((error) => {
+        console.error(`Error fetching client with id ${id}:`, error);
+        return of(null as any); // Devuelve null en caso de error
+      })
+    );
   }
 
   createClient(client: Client): Observable<Client> {
-    return this.http.post<Client>(`${this.baseUrl}Client/CreateClient`, client);
+    return this.http.post<Client>('/api/clients', client).pipe(
+      catchError((error) => {
+        console.error('Error creating client:', error);
+        return of(null as any); // Devuelve null en caso de error
+      })
+    );
   }
 
   updateClient(client: Client): Observable<Client> {
-    return this.http.put<Client>(`${this.baseUrl}Client/UpdateClient`, client);
+    return this.http.put<Client>(`/api/clients/${client.clientId}`, client).pipe(
+      catchError((error) => {
+        console.error(`Error updating client with id ${client.clientId}:`, error);
+        return of(null as any); // Devuelve null en caso de error
+      })
+    );
   }
 
-  deleteClient(id: number): Observable<any> {
-    return this.http.delete(`${this.baseUrl}Client/DeleteClient`, { params: { id } });
+  deleteClient(id: number): Observable<void> {
+    return this.http.delete<void>(`/api/clients/${id}`).pipe(
+      catchError((error) => {
+        console.error(`Error deleting client with id ${id}:`, error);
+        return of(undefined); // Devuelve undefined en caso de error
+      })
+    );
+  }
+
+  getClientsPaginated(page: number, size: number): Observable<Client[]> {
+    const params = new HttpParams()
+      .set('page', page.toString())
+      .set('size', size.toString());
+
+    return this.http.get<Client[]>('/api/clients/paginated', { params }).pipe(
+      catchError((error) => {
+        console.error('Error fetching paginated clients:', error);
+        return of([]); // Devuelve un arreglo vacío en caso de error
+      })
+    );
   }
 }
