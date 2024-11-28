@@ -1,21 +1,19 @@
-﻿using CRM_OrionTek.Domain.Entities;
-
-namespace CRM_OrionTek.Domain.Interfaces.IClientRepository
+﻿namespace CRM_OrionTek.Domain.Interfaces.ICommonRepository
 {
     public class Dto_pagination
     {
-        public object Data { get; set; }
+        public object? Data { get; set; }
         public int QuantityRecords { get; set; }
     }
 
-    public interface IClientRepository
+    public interface ITRepository<TEntity,TEntityInput,TEntityOutput>
     {
-        Task<Client> Create(Client client);
-        Task<Client> Update(Client client, int id);
+        Task<TEntity> Create(TEntityInput entity);
+        Task<TEntity> Update(TEntityInput entity, int id);
         Task<Dto_pagination> GetAllPaginated(int page = 1, int size = 0, string? SearchData = "");
-        Task<Client> GetOne(int id);
-        Task<Client> Delete(int id);
-        Task<List<Client>> GetByname(string name);
-        Task<List<Client>> GetAll();
+        Task<TEntity> GetOne(int id);
+        Task<TEntity> Delete(int id);
+        Task<List<TEntity>> GetByname(string name);
+        Task<List<TEntity>> GetAll();
     }
 }
