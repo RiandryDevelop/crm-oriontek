@@ -1,8 +1,17 @@
-import { Routes } from '@angular/router';
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
 
-const routes: Routes = [
-  { path: 'clients', loadChildren: () => import('./features/client/client.module').then(m => m.ClientModule) },
-  // Add other feature routes
-  { path: '', redirectTo: '/clients', pathMatch: 'full' },
-  { path: '**', redirectTo: '/clients' }
+export const routes: Routes = [
+  { path: '', redirectTo: 'clients', pathMatch: 'full' }, // Ruta por defecto
+  {
+    path: 'clients',
+    loadChildren: () => import('./features/clients/clients.module').then(m => m.ClientsModule), // Lazy loading de clientes
+  },
+  { path: '**', redirectTo: 'clients' }, // Ruta de fallback
 ];
+
+@NgModule({
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule],
+})
+export class AppRoutingModule {}
